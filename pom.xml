@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.arteco.mvc</groupId>
+    <artifactId>arteco-mvc-jdk5</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>arteco-mvc</module>
+        <module>front-sample</module>
+        <module>arteco-mvc-thymeleaf</module>
+        <module>arteco-mvc-jstl</module>
+    </modules>
+
+    <properties>
+        <java.version>1.5</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <servlet-api.version>3.1.0</servlet-api.version>
+        <jackson-mapper.version>1.9.13</jackson-mapper.version>
+    </properties>
+
+</project>
