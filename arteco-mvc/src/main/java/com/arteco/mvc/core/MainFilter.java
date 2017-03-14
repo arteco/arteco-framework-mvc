@@ -16,7 +16,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
+//import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,7 +35,7 @@ import com.arteco.mvc.utils.SeoUtils;
  * Arteco Consulting Sl.
  * mailto: info@arteco-consulting.com
  */
-@WebFilter(filterName = "MainFilter", urlPatterns = "/*")
+//@WebFilter(filterName = "MainFilter", urlPatterns = "/*")
 public class MainFilter implements Filter {
 
 	public static final String LOCALE_KEY = "locale";
@@ -57,6 +57,10 @@ public class MainFilter implements Filter {
 
 		if (app == null) {
 			String className = servletContext.getInitParameter("mainFilterApp");
+			if (StringUtils.isEmpty(className)){
+				throw new ServletException("No init Parameter [mainFilterApp] set with class extending "+App.class.getName());
+			}
+
 			System.out.println("Starting App " + className);
 			try {
 				app = (App) Class.forName(className).newInstance();

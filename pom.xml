@@ -17,9 +17,34 @@
 
     <properties>
         <java.version>1.5</java.version>
+        <servlet-api.version>2.4</servlet-api.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <servlet-api.version>3.1.0</servlet-api.version>
         <jackson-mapper.version>1.9.13</jackson-mapper.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>${servlet-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.6.1</version>
+                    <configuration>
+                        <target>1.5</target>
+                        <source>1.5</source>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 </project>
