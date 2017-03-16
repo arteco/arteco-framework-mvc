@@ -1,21 +1,17 @@
 package com.arteco.mvc.core;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.Set;
+import com.arteco.mvc.processor.PathRegister;
+import com.arteco.mvc.utils.DateUtils;
+import com.arteco.mvc.view.JstlViewResolver;
+import com.arteco.mvc.view.ViewResolver;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.arteco.mvc.processor.PathRegister;
-import com.arteco.mvc.utils.DateUtils;
-import com.arteco.mvc.view.ViewResolver;
-import org.codehaus.jackson.map.ObjectMapper;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Created by rarnau on 10/11/16.
@@ -38,7 +34,9 @@ public abstract class App {
 
     protected abstract Collection<Locale> getAvailableLocales();
 
-    protected abstract ViewResolver getViewResolver();
+    protected ViewResolver getViewResolver() {
+        return new JstlViewResolver();
+    }
 
 
     public void onStartup(Set<Class<?>> c, ServletContext ctx) throws ServletException {
