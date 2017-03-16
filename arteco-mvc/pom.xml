@@ -6,10 +6,10 @@
     <parent>
         <artifactId>arteco-mvc-jdk5</artifactId>
         <groupId>com.arteco.mvc</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
-    <artifactId>arteco-mvc</artifactId>
+    <artifactId>arteco-mvc-java5</artifactId>
 
     <properties>
         <java.version>1.5</java.version>
@@ -45,5 +45,4 @@
             <version>1.10.1</version>
         </dependency>
     </dependencies>
-
 </project>

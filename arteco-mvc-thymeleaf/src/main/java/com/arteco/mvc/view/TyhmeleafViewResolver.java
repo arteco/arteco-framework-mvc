@@ -5,7 +5,6 @@ import com.arteco.mvc.configuration.AppConfig;
 import com.arteco.mvc.core.App;
 import com.arteco.mvc.model.MimeType;
 import com.arteco.mvc.utils.SeoUtils;
-import nz.net.ultraq.thymeleaf.LayoutDialect;
 import ognl.OgnlRuntime;
 import org.apache.commons.lang.BooleanUtils;
 import org.thymeleaf.TemplateEngine;
@@ -36,7 +35,7 @@ public class TyhmeleafViewResolver implements ViewResolver {
         templateEngine.setTemplateResolver(templateResolver);
         templateEngine.setMessageResolver(new MessageResolver(app,
                 BooleanUtils.toBoolean(appConfig.getProperty("thymeleaf.messages.logUnresolved"))));
-        templateEngine.addDialect(new LayoutDialect());
+//        templateEngine.addDialect(new LayoutDialect());
         templateResolver.setTemplateMode(TemplateMode.HTML);
         String prefix = appConfig.getProperty("thymeleaf.template.prefix");
         templateResolver.setPrefix(prefix != null ? prefix : "/templates/");

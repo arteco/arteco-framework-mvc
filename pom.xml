@@ -7,12 +7,11 @@
     <groupId>com.arteco.mvc</groupId>
     <artifactId>arteco-mvc-jdk5</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <modules>
         <module>arteco-mvc</module>
         <module>front-sample</module>
         <module>arteco-mvc-thymeleaf</module>
-        <module>arteco-mvc-jstl</module>
     </modules>
 
     <properties>
@@ -37,7 +36,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.6.1</version>
+                    <version>2.5</version>
                     <configuration>
                         <target>1.5</target>
                         <source>1.5</source>

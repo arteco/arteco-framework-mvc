@@ -33,7 +33,7 @@ public class JstlViewResolver implements ViewResolver {
             RequestDispatcher dispatcher = servletContext.getRequestDispatcher(view);
             dispatcher.forward(httpReq, httpRes);
         } catch (ServletException se) {
-            throw new IOException(se.getMessage(), se);
+            throw new IOException(se.getMessage());
         }
     }
 }
