@@ -47,7 +47,10 @@ public class MethodHandler implements Controller {
 
 	public Object serve(App app, HttpServletRequest httpReq, HttpServletResponse httpRes) throws InvocationTargetException, IllegalAccessException {
 		try {
-			invokeMethod(app, beforeMethod, httpReq, httpRes);
+			Object result = invokeMethod(app, beforeMethod, httpReq, httpRes);
+			if (result != null) {
+				return result;
+			}
 			return invokeMethod(app, method, httpReq, httpRes);
 		} finally {
 			invokeMethod(app, afterMethod, httpReq, httpRes);
