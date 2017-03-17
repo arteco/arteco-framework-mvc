@@ -1,9 +1,8 @@
 package com.arteco.mvc.sample;
 
 
-
-
 import com.arteco.mvc.annotation.BeforeMethod;
+import com.arteco.mvc.annotation.ErrorHandler;
 import com.arteco.mvc.annotation.RequestMethod;
 import com.arteco.mvc.core.Model;
 
@@ -23,6 +22,16 @@ public class IndexController {
         return "index";
     }
 
+    @RequestMethod("/redirect")
+    public String redirect() {
+        return "redirect:/aviso-legal";
+    }
+
+    @RequestMethod("/throws")
+    public String throwable() {
+        throw new IllegalArgumentException("Hi hi");
+    }
+
     @RequestMethod("/aviso-legal")
     public String avisoLegal() {
         return "section/aviso-legal";
@@ -34,4 +43,9 @@ public class IndexController {
         System.out.println("Executing before method " + request.getRequestURI());
     }
 
+    @ErrorHandler(IllegalArgumentException.class)
+    public String catchException(Model model, HttpServletRequest request) {
+        System.out.println("Exception Cached " + request.getRequestURI());
+        return "index";
+    }
 }

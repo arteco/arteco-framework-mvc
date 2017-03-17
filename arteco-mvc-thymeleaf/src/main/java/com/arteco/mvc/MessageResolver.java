@@ -11,9 +11,11 @@ import java.util.logging.Logger;
 
 import com.arteco.mvc.core.App;
 import org.apache.commons.lang.StringUtils;
-import org.thymeleaf.context.ITemplateContext;
-import org.thymeleaf.context.WebEngineContext;
+import org.thymeleaf.Arguments;
+import org.thymeleaf.context.IContext;
+import org.thymeleaf.context.WebContext;
 import org.thymeleaf.messageresolver.AbstractMessageResolver;
+import org.thymeleaf.messageresolver.MessageResolution;
 
 /**
  * Created by rarnau on 13/11/16.
@@ -34,7 +36,8 @@ public class MessageResolver extends AbstractMessageResolver {
 		this.logUnresolved = logUnresolved;
 	}
 
-	public String resolveMessage(ITemplateContext context, Class<?> origin, String key, Object[] messageParameters) {
+	public MessageResolution resolveMessage(Arguments arguments, String key, Object[] messageParameters) {
+		IContext context = arguments.getContext();
 		Locale locale = context.getLocale();
 		Properties properties = getProperties(locale);
 		String value = properties.getProperty(key);
@@ -46,14 +49,14 @@ public class MessageResolver extends AbstractMessageResolver {
 			value = appendParameters(value, messageParameters);
 		}
 		if (value == null){
-			if (context instanceof WebEngineContext){
+			if (context instanceof WebContext){
 				if (logUnresolved){
 					LOGGER.log(Level.SEVERE, "Texto no encontrado " + key);
 				}
 			}
 			value = "¿¿¿"+key+"???";
 		}
-		return value;
+		return new MessageResolution(value);
 	}
 
 	private String appendParameters(String value, Object[] messageParameters) {
@@ -92,11 +95,13 @@ public class MessageResolver extends AbstractMessageResolver {
 		return properties;
 	}
 
-	public String createAbsentMessageRepresentation(ITemplateContext context, Class<?> origin, String key, Object[] messageParameters) {
+	public String createAbsentMessageRepresentation(Arguments arguments, Class<?> origin, String key, Object[] messageParameters) {
 		return "¿¿¿" + key + "???";
 	}
 
 	public void clear() {
 		messagesMap.clear();
 	}
+
+
 }

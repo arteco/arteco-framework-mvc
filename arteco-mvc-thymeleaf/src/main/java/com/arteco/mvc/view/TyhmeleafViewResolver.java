@@ -10,9 +10,8 @@ import org.apache.commons.lang.BooleanUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.AbstractContext;
 import org.thymeleaf.context.WebContext;
-import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templatemode.StandardTemplateModeHandlers;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +35,7 @@ public class TyhmeleafViewResolver implements ViewResolver {
         templateEngine.setMessageResolver(new MessageResolver(app,
                 BooleanUtils.toBoolean(appConfig.getProperty("thymeleaf.messages.logUnresolved"))));
 //        templateEngine.addDialect(new LayoutDialect());
-        templateResolver.setTemplateMode(TemplateMode.HTML);
+        templateResolver.setTemplateMode(StandardTemplateModeHandlers.HTML5.getTemplateModeName());
         String prefix = appConfig.getProperty("thymeleaf.template.prefix");
         templateResolver.setPrefix(prefix != null ? prefix : "/templates/");
         String suffix = appConfig.getProperty("thymeleaf.template.suffix");
@@ -47,7 +46,7 @@ public class TyhmeleafViewResolver implements ViewResolver {
     }
 
     public void gotoView(App app, HttpServletRequest httpReq, HttpServletResponse httpRes, String view, Locale locale,
-                          ServletContext servletContext) throws IOException {
+                         ServletContext servletContext) throws IOException {
         if (view == null) {
             return;
         }
@@ -66,7 +65,7 @@ public class TyhmeleafViewResolver implements ViewResolver {
         Enumeration enumer = httpReq.getAttributeNames();
         while (enumer.hasMoreElements()) {
             Object name = enumer.nextElement();
-            context.setVariable((String)name, httpReq.getAttribute((String)name));
+            context.setVariable((String) name, httpReq.getAttribute((String) name));
         }
         context.setVariable("seoUtils", new SeoUtils());
     }

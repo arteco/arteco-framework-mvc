@@ -50,7 +50,7 @@ public abstract class App {
     public void after(HttpServletRequest req, HttpServletResponse res) {
     }
 
-    public void error(HttpServletRequest req, HttpServletResponse res, Controller ctrl, Exception e) {
+    public void error(HttpServletRequest req, HttpServletResponse res, Handler ctrl, Exception e) {
         e.printStackTrace();
     }
 

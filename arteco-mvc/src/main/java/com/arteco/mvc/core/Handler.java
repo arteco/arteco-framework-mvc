@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
  * Arteco Consulting Sl.
  * mailto: info@arteco-consulting.com
  */
-public interface Controller {
+public interface Handler {
 	Object serve(App app, HttpServletRequest httpReq, HttpServletResponse httpRes) throws InvocationTargetException, IllegalAccessException;
+	Object getController();
 }
