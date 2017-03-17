@@ -1,5 +1,12 @@
 # arteco-mvc-jdk5
 
+# TODO
+
+* Path a nivel de clase
+* Validaciones JSR 303
+* Respuesta json?
+* Mapeo de parámetros con objetos (y validaciones)
+
 
 # Instrucciones
 
