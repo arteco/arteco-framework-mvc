@@ -8,6 +8,7 @@ import com.arteco.mvc.annotation.RequestMethod;
 import com.arteco.mvc.core.Handler;
 import com.arteco.mvc.model.PathExpression;
 import com.arteco.mvc.model.RequestVerb;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -46,6 +47,8 @@ public class PathRegister {
             Method[] methods = controllerClass.getMethods();
             Method beforeMethod = null;
             Method afterMethod = null;
+            String ctrlPath = resolveControllerPath(ctrl);
+
             for (Method method : methods) {
                 BeforeMethod bann = method.getAnnotation(BeforeMethod.class);
                 if (bann != null) {
@@ -66,7 +69,7 @@ public class PathRegister {
             for (Method method : methods) {
                 RequestMethod ann = method.getAnnotation(RequestMethod.class);
                 if (ann != null) {
-                    appendHandler(ctrl, method, ann, beforeMethod, afterMethod);
+                    appendHandler(ctrl, method, ann, beforeMethod, afterMethod, ctrlPath);
                 }
             }
             for (Method method : methods) {
@@ -91,13 +94,37 @@ public class PathRegister {
         errorHandlers.add(new ErrorMethodHandler(ctrl, method, baseType));
     }
 
-    private void appendHandler(Object ctrl, Method method, RequestMethod ann, Method beforeMethod, Method afterMethod) {
+    private void appendHandler(Object ctrl, Method method, RequestMethod ann, Method beforeMethod, Method afterMethod, String ctrlPath) {
         String[] paths = ann.value();
         RequestVerb verb = ann.method();
         for (String path : paths) {
-            PathExpression exp = new PathExpression(path);
+            PathExpression exp = new PathExpression(ctrlPath + addPathSlash(path));
             handlers.add(new MethodHandler(ctrl, method, verb, exp, beforeMethod, afterMethod));
         }
+    }
+
+    protected String resolveControllerPath(Object ctrl) {
+        List<String> prefixList = new ArrayList<String>();
+        Class<?> ctrlClass = ctrl.getClass();
+
+        while(!Object.class.equals(ctrlClass)) {
+            RequestMethod classAnn = ctrlClass.getAnnotation(RequestMethod.class);
+            if (classAnn != null) {
+                prefixList.add(classAnn.value()[0]);
+            }
+            ctrlClass = ctrlClass.getSuperclass();
+        }
+        String prefix = StringUtils.EMPTY;
+
+        for (int i = prefixList.size() - 1; i >= 0; i--) {
+            String value = StringUtils.removeEnd(prefixList.get(i), "/");
+            prefix += addPathSlash(value);
+        }
+        return prefix;
+    }
+
+    private String addPathSlash(String path) {
+        return path.startsWith("/") ? path : ("/" + path);
     }
 
     public Map<Object, List<ErrorMethodHandler>> getErrorHandlersByController() {

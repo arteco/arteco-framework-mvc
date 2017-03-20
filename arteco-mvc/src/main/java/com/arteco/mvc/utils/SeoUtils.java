@@ -114,10 +114,6 @@ public class SeoUtils {
 	}
 
 	public static String removeEndSlash(String path) {
-		if (path.length() > 0 && path.endsWith("/")) {
-			path = StringUtils.removeEnd(path, "/");
-		}
-		return path;
+		return StringUtils.removeEnd(path, "/");
 	}
-
 }

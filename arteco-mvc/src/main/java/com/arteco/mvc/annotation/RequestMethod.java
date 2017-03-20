@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  * mailto: info@arteco-consulting.com
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
+@Target({ElementType.METHOD, ElementType.TYPE})
 public @interface RequestMethod {
 	String[] value();
 	RequestVerb method() default RequestVerb.GET;
