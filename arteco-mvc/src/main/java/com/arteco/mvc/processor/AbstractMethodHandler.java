@@ -8,6 +8,7 @@ import com.arteco.mvc.core.Model;
 import com.arteco.mvc.core.ModelImpl;
 import com.arteco.mvc.model.PathExpression;
 import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -132,11 +133,10 @@ public abstract class AbstractMethodHandler {
                 if (ann.obligatory()) {
                     throw new IllegalArgumentException("Parameter " + (ann.value()) + " is null");
                 } else {
-                    value = ann.defaultValue();
+                    value = StringUtils.trimToNull(ann.defaultValue());
                 }
             }
-            value = convertValue(app, targetClass, value);
-            return value;
+            return value == null ? null : convertValue(app, targetClass, value);
         }
     }
 
