@@ -36,7 +36,7 @@ public abstract class AbstractMethodHandler {
         this.beforeMethod = beforeMethod;
     }
 
-    public Object serve(App app, HttpServletRequest httpReq, HttpServletResponse httpRes) throws InvocationTargetException, IllegalAccessException {
+    public Object serve(App app, HttpServletRequest httpReq, HttpServletResponse httpRes) throws Throwable {
         try {
             Object result = invokeMethod(app, beforeMethod, httpReq, httpRes);
             if (result != null) {
@@ -48,7 +48,7 @@ public abstract class AbstractMethodHandler {
         }
     }
 
-    private Object invokeMethod(App app, Method method, HttpServletRequest httpReq, HttpServletResponse httpRes) throws IllegalAccessException, InvocationTargetException {
+    private Object invokeMethod(App app, Method method, HttpServletRequest httpReq, HttpServletResponse httpRes) throws Throwable {
         if (method == null) {
             return null;
         }
@@ -67,8 +67,8 @@ public abstract class AbstractMethodHandler {
             return method.invoke(controller, args);
         } catch (InvocationTargetException ite) {
             Throwable targetExcep = ite.getTargetException();
-            if (targetExcep instanceof RuntimeException) {
-                throw ((RuntimeException) targetExcep);
+            if (targetExcep != null) {
+                throw targetExcep;
             }
             throw ite;
         }

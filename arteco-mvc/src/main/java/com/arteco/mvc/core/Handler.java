@@ -1,7 +1,5 @@
 package com.arteco.mvc.core;
 
-import java.lang.reflect.InvocationTargetException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
  * mailto: info@arteco-consulting.com
  */
 public interface Handler {
-	Object serve(App app, HttpServletRequest httpReq, HttpServletResponse httpRes) throws InvocationTargetException, IllegalAccessException;
-	Object getController();
+    Object serve(App app, HttpServletRequest httpReq, HttpServletResponse httpRes) throws Throwable;
+
+    Object getController();
 }
