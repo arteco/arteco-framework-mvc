@@ -83,7 +83,7 @@ public class MainFilter implements Filter {
 
                 try {
                     result = ctrl.serve(app, httpReq, httpRes);
-                } catch (Exception e) {
+                } catch (Throwable e) {
                     result = handleError(httpReq, httpRes, ctrl, e);
                 }
 
@@ -92,7 +92,7 @@ public class MainFilter implements Filter {
                 } else if (result != null) {
                     serveJsonObject(app, httpRes, result);
                 }
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 app.error(httpReq, httpRes, ctrl, e);
             }
         } else {
@@ -111,7 +111,7 @@ public class MainFilter implements Filter {
         }
     }
 
-    private Object handleError(HttpServletRequest httpReq, HttpServletResponse httpRes, Handler handler, Exception e) throws Exception {
+    private Object handleError(HttpServletRequest httpReq, HttpServletResponse httpRes, Handler handler, Throwable e) throws Throwable {
         Object result = null;
         Object controller = handler.getController();
         List<ErrorMethodHandler> errorHandlers = app.register.getErrorHandlersByController().get(controller);
