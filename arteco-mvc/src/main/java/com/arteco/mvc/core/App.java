@@ -21,6 +21,7 @@ import java.util.*;
 public abstract class App {
 
     public static final String ATTR_KEY = "com.arteco.mvc.core.App";
+    public static final String DEFAULT_LOCALE_PARAMETER = "lang";
 
     protected PathRegister register = new PathRegister();
     protected ObjectMapper jsonMapper = new ObjectMapper();
@@ -64,6 +65,14 @@ public abstract class App {
     }
 
     public Locale getLocaleResolver(HttpServletRequest httpReq) {
+        String lang = httpReq.getParameter(getLocaleParameterName());
+        if (lang != null) {
+            Locale locale = new Locale(lang);
+            if (getAvailableLocales().contains(locale)) {
+                return locale;
+            }
+        }
+
         Enumeration<Locale> locales = httpReq.getLocales();
         Collection<Locale> availLocales = getAvailableLocales();
         while (locales.hasMoreElements()) {
@@ -71,9 +80,12 @@ public abstract class App {
             if (availLocales.contains(locale)) {
                 return locale;
             }
-
         }
         return getDefaultLocale();
+    }
+
+    protected String getLocaleParameterName() {
+        return DEFAULT_LOCALE_PARAMETER;
     }
 
 
