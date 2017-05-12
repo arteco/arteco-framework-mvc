@@ -16,7 +16,15 @@ public enum MimeType {
     JPEG("image/jpeg"),
     JPG("image/jpeg"),
     GIF("image/gif"),
-    TEXT("text/plain");
+    TEXT("text/plain"),
+    PDF("application/pdf"),
+    DOC("application/msword"),
+    DOCX("application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
+    XLS("application/vnd.ms-excel"),
+    XLSX("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
+    ODT("application/vnd.oasis.opendocument.text"),
+    ODS("application/vnd.oasis.opendocument.spreadsheet"),
+    OTHER("application/octet-stream");
 
     private String mimeType;
 
@@ -34,6 +42,6 @@ public enum MimeType {
                 return mime.getMimeType();
             }
         }
-        return TEXT.getMimeType();
+        return OTHER.getMimeType();
     }
 }

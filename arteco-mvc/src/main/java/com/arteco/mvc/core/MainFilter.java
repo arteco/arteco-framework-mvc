@@ -97,10 +97,9 @@ public class MainFilter implements Filter {
             }
         } else {
             String uri = SeoUtils.getUriWithouContextPath(httpReq);
-            String realUri = "/static" + uri;
-            InputStream is = getStaticResource(realUri);
+            InputStream is = getStaticResource(uri);
             if (is != null) {
-                serverResource(httpReq, httpRes, app, is, realUri);
+                serverResource(httpReq, httpRes, app, is, uri);
             } else {
                 httpRes.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 String view = app.notfound(httpReq, httpRes);
@@ -116,7 +115,7 @@ public class MainFilter implements Filter {
         Object controller = handler.getController();
         List<ErrorMethodHandler> errorHandlers = app.register.getErrorHandlersByController().get(controller);
         boolean found = false;
-        if (errorHandlers!=null) {
+        if (errorHandlers != null) {
             for (ErrorMethodHandler errHandler : errorHandlers) {
                 if (errHandler.canHandle(e)) {
                     found = true;
@@ -134,7 +133,10 @@ public class MainFilter implements Filter {
         InputStream is = null;
         byte[] array = resourceCache.get(realUri);
         if (app.isDevel() || !resourceCache.containsKey(realUri)) {
-            is = this.getClass().getResourceAsStream(realUri);
+            is = this.getClass().getResourceAsStream("/static" + realUri);
+            if (is == null && !realUri.contains("/WEB_INF")) {
+                is = servletContext.getResourceAsStream(realUri);
+            }
             if (is != null) {
                 array = IOUtils.toByteArray(is);
             }
