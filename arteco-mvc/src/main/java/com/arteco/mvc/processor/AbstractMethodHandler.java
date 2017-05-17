@@ -29,26 +29,26 @@ public abstract class AbstractMethodHandler {
     private final Method afterMethod;
     private final Method beforeMethod;
 
-    public AbstractMethodHandler(Object controller, Method method, Method afterMethod, Method beforeMethod) {
+    AbstractMethodHandler(Object controller, Method method, Method afterMethod, Method beforeMethod) {
         this.controller = controller;
         this.method = method;
         this.afterMethod = afterMethod;
         this.beforeMethod = beforeMethod;
     }
 
-    public Object serve(App app, HttpServletRequest httpReq, HttpServletResponse httpRes) throws Throwable {
+    public Object serve(App app, HttpServletRequest httpReq, HttpServletResponse httpRes, Throwable e) throws Throwable {
         try {
-            Object result = invokeMethod(app, beforeMethod, httpReq, httpRes);
+            Object result = invokeMethod(app, beforeMethod, httpReq, httpRes, e);
             if (result != null) {
                 return result;
             }
-            return invokeMethod(app, method, httpReq, httpRes);
+            return invokeMethod(app, method, httpReq, httpRes, e);
         } finally {
-            invokeMethod(app, afterMethod, httpReq, httpRes);
+            invokeMethod(app, afterMethod, httpReq, httpRes, e);
         }
     }
 
-    private Object invokeMethod(App app, Method method, HttpServletRequest httpReq, HttpServletResponse httpRes) throws Throwable {
+    private Object invokeMethod(App app, Method method, HttpServletRequest httpReq, HttpServletResponse httpRes, Throwable e) throws Throwable {
         if (method == null) {
             return null;
         }
@@ -61,7 +61,7 @@ public abstract class AbstractMethodHandler {
             if (annotations != null) {
                 handleAnnotateParams(app, httpReq, args, i, targetClass, annotations);
             }
-            handleKnownTypesParams(targetClass, args, i, httpReq, httpRes);
+            handleKnownTypesParams(targetClass, args, i, httpReq, httpRes, e);
         }
         try {
             return method.invoke(controller, args);
@@ -74,7 +74,7 @@ public abstract class AbstractMethodHandler {
         }
     }
 
-    private void handleKnownTypesParams(Class<?> targetClass, Object[] args, int i, HttpServletRequest httpReq, HttpServletResponse httpRes) {
+    private void handleKnownTypesParams(Class<?> targetClass, Object[] args, int i, HttpServletRequest httpReq, HttpServletResponse httpRes, Throwable e) {
         Object value = null;
         if (targetClass.isAssignableFrom(HttpServletRequest.class)) {
             value = httpReq;
@@ -82,6 +82,10 @@ public abstract class AbstractMethodHandler {
             value = httpRes;
         } else if (targetClass.isAssignableFrom(Model.class)) {
             value = new ModelImpl(httpReq);
+        } else if (targetClass.isAssignableFrom(Throwable.class)) {
+            value = e;
+        } else if (targetClass.isAssignableFrom(Exception.class) && e instanceof Exception) {
+            value = e;
         }
         if (value != null) {
             args[i] = value;

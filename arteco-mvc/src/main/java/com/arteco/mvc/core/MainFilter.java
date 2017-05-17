@@ -82,7 +82,7 @@ public class MainFilter implements Filter {
                 httpReq.setAttribute(LANGUAGE_KEY, locale.getLanguage());
 
                 try {
-                    result = ctrl.serve(app, httpReq, httpRes);
+                    result = ctrl.serve(app, httpReq, httpRes, null);
                 } catch (Throwable e) {
                     result = handleError(httpReq, httpRes, ctrl, e);
                 }
@@ -119,7 +119,7 @@ public class MainFilter implements Filter {
             for (ErrorMethodHandler errHandler : errorHandlers) {
                 if (errHandler.canHandle(e)) {
                     found = true;
-                    result = errHandler.serve(app, httpReq, httpRes);
+                    result = errHandler.serve(app, httpReq, httpRes, e);
                 }
             }
         }

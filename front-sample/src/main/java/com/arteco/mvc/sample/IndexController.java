@@ -44,7 +44,7 @@ public class IndexController {
     }
 
     @ErrorHandler(IllegalArgumentException.class)
-    public String catchException(Model model, HttpServletRequest request) {
+    public String catchException(Model model, HttpServletRequest request, Exception e, Throwable t) {
         System.out.println("Exception Cached " + request.getRequestURI());
         return "index";
     }

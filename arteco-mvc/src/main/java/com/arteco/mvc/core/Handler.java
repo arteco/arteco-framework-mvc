@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
  * mailto: info@arteco-consulting.com
  */
 public interface Handler {
-    Object serve(App app, HttpServletRequest httpReq, HttpServletResponse httpRes) throws Throwable;
+    Object serve(App app, HttpServletRequest httpReq, HttpServletResponse httpRes, Throwable exception) throws Throwable;
 
     Object getController();
 }
