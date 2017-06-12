@@ -1,4 +1,4 @@
-# arteco-mvc
+# arteco-mvc-framework
 
 # TODO
 
