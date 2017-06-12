@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.arteco.mvc</groupId>
-    <artifactId>arteco-mvc-jdk5</artifactId>
+    <artifactId>arteco-mvc-framework</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
     <modules>
@@ -14,12 +14,29 @@
         <module>arteco-mvc-thymeleaf</module>
     </modules>
 
+    <scm>
+        <url>https://github.com/arteco/arteco-mvc-framework.git</url>
+    </scm>
+
     <properties>
         <java.version>1.5</java.version>
         <servlet-api.version>2.4</servlet-api.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jackson-mapper.version>1.9.13</jackson-mapper.version>
     </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>arteco-artifactory</id>
+            <name>arteco-artifactory-releases</name>
+            <url>https://artifactory.artecoapps.com/artifactory/arteco-release</url>
+        </repository>
+        <snapshotRepository>
+            <id>arteco-artifactory</id>
+            <name>arteco-artifactory-snapshots</name>
+            <url>https://artifactory.artecoapps.com/artifactory/arteco-release</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <dependencies>
         <dependency>
@@ -38,8 +55,8 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>2.5</version>
                     <configuration>
-                        <target>1.5</target>
-                        <source>1.5</source>
+                        <target>1.6</target>
+                        <source>1.6</source>
                     </configuration>
                 </plugin>
             </plugins>
