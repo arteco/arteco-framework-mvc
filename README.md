@@ -1,4 +1,4 @@
-# arteco-mvc-jdk5
+# arteco-mvc
 
 # TODO
 
