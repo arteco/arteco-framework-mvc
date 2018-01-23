@@ -25,7 +25,7 @@ import java.util.Locale;
  * Arteco Consulting Sl
  * mailto: info@arteco-consulting.com
  */
-public class TyhmeleafViewResolver implements ViewResolver {
+public class ThymeleafViewResolver implements ViewResolver {
 
     private TemplateEngine templateEngine = new TemplateEngine();
     private ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
