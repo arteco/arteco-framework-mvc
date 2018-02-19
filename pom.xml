@@ -12,6 +12,7 @@
         <module>arteco-mvc</module>
         <module>front-sample</module>
         <module>arteco-mvc-thymeleaf</module>
+        <module>arteco-mvc-jade</module>
     </modules>
 
     <scm>
